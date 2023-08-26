@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Language Selection</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+    body {
+      font-family: "Poppins", Arial, sans-serif; /* Use Poppins font */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50vh;
+      background-color: #f8f9fa;
+      padding: 30px;
+      margin: 0;
+    }
+    
+    .container {
+      text-align: center;
+    }
+    
+    select {
+      appearance: none;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 12px; /* Increase padding for larger font */
+      font-size: 18px; /* Increase font size */
+      width: 220px; /* Slightly wider to accommodate larger text */
+    }
+    
+    select::-ms-expand {
+      display: none;
+    }
+    
+    select:focus {
+      outline: none;
+      border-color: #007bff;
+    }
+    
+    h1 {
+      font-size: 24px; /* Increase font size for headings and paragraphs */
+      margin-bottom: 20px; /* Add some spacing below elements */
+      text-align: justify;
+    }
+
+    p{
+        font-size: 14px; /* Increase font size for headings and paragraphs */
+      margin-bottom: 20px; /* Add some spacing below elements */
+      text-align: justify;
+    }
+  </style>
+<script>
+  $(document).ready(function() {
+    $('#languageSelect').select2({
+      templateSelection: function(data, container) {
+        if (data.id) {
+          return $('<span><i class="flag-icon flag-icon-' + data.id + '"></i> ' + data.text + '</span>');
+        }
+        return data.text;
+      }
+    });
+
+    $('#languageSelect').on('change', function() {
+      changeLanguage();
+    });
+  });
+
+  function changeLanguage() {
+    var selectedLang = $('#languageSelect').val();
+    var langElements = document.querySelectorAll("[data-lang]");
+
+    for (var i = 0; i < langElements.length; i++) {
+      var element = langElements[i];
+      var langText = element.getAttribute("data-lang");
+      var translations = JSON.parse(langText);
+
+      if (translations[selectedLang]) {
+        element.textContent = translations[selectedLang];
+      }
+    }
+  }
+</script>
+</head>
+<body>
+    <div class="mt-4">
+        <label for="languageSelect">Select a language:</label>
+        <select id="languageSelect" class="custom-select">
+          <option value="us" data-icon="us">English</option>
+          <option value="id" data-icon="id">Indonesian</option>
+          <option value="my" data-icon="my">Bahasa</option>
+          <option value="cn" data-icon="cn">Chinese</option>
+        </select>
+      
+    <div class="container text-center">
+        <h1 data-lang='{"us": "Hello! Welcome to Our Amazing Website!", "id": "Halo! Selamat Datang di Situs Luar Biasa Kami!", "my": "Hai! Selamat Datang ke Laman Web Hebat Kami!", "cn": "你好！欢迎来到我们的精彩网站！"}'>Hello! Welcome to Our Amazing Website!</h1>
+        <p data-lang='{"us": "We are excited to have you explore the wonderful content we have prepared for you. Feel free to navigate through our pages and enjoy your stay!", "id": "Kami sangat antusias untuk memperkenalkan Anda pada konten menarik yang telah kami siapkan untuk Anda. Jelajahi halaman-halaman kami dan nikmati kunjungan Anda!", "my": "Kami berasa bersemangat untuk membolehkan anda meneroka kandungan hebat yang telah kami sediakan untuk anda. Sila melayari laman-laman kami dan nikmati penginapan anda!", "cn": "我们非常高兴您来探索我们为您准备的精彩内容。随意浏览我们的页面，尽情享受您的逗留！"}'>We are excited to have you explore the wonderful content we have prepared for you. Feel free to navigate through our pages and enjoy your stay!</p>
+        
+    </div>
+    <div style="text-align: center; margin-top: 20px;">
+      <p style="font-size: 12px;">Created by <a href="https://megatirfan.com" target="_blank" rel="noopener noreferrer">Megat Irfan</a></p>
+  </div>
+      </div>
+     
+</body>
+</html>
